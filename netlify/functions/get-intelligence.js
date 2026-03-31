@@ -3,11 +3,9 @@ exports.handler = async function(event, context) {
   const BASE_ID = process.env.AIRTABLE_BASE_ID;
   const TABLE_NAME = 'Daily Intelligence';
 
-  const today = new Date().toISOString().split('T')[0];
-
-  const url = `https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(TABLE_NAME)}?filterByFormula=IS_SAME({Date},'${today}','day')&maxRecords=10`;
-
   try {
+    const url = `https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(TABLE_NAME)}?maxRecords=7&sort[0][field]=Date&sort[0][direction]=desc`;
+
     const response = await fetch(url, {
       headers: {
         Authorization: `Bearer ${AIRTABLE_TOKEN}`,
