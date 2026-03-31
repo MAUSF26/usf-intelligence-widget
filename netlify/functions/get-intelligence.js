@@ -1,5 +1,3 @@
-const fetch = require('node-fetch');
-
 exports.handler = async function(event, context) {
   const AIRTABLE_TOKEN = process.env.AIRTABLE_TOKEN;
   const BASE_ID = process.env.AIRTABLE_BASE_ID;
