@@ -4,7 +4,7 @@ exports.handler = async function(event, context) {
   const TABLE_NAME = 'Daily Intelligence';
 
   try {
-    const url = `https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(TABLE_NAME)}?maxRecords=7&sort[0][field]=Date&sort[0][direction]=desc`;
+    const url = `https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(TABLE_NAME)}?maxRecords=15&sort[0][field]=Date&sort[0][direction]=desc`;
 
     const response = await fetch(url, {
       headers: {
