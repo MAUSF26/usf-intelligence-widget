@@ -19,8 +19,6 @@
     --canvas: linear-gradient(135deg, #1a0d3d 0%, #261759 35%, #3a1060 65%, #4a1555 100%);
     --glass-t2-bg: rgba(255,255,255,0.08);
     --glass-t2-border: rgba(255,255,255,0.15);
-    --glass-t3-bg: rgba(255,255,255,0.12);
-    --glass-t3-border: rgba(255,255,255,0.22);
     --text-heading: rgba(255,255,255,0.97);
     --text-body: rgba(255,255,255,0.82);
     --text-meta: rgba(255,255,255,0.55);
@@ -39,7 +37,6 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Blobs */
   body::before, body::after {
     content: ''; position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
   }
@@ -57,13 +54,12 @@
     border-radius: 50%; pointer-events: none; z-index: 0;
   }
 
-  /* Layout */
   .app {
     position: relative; z-index: 1;
     max-width: 1080px; margin: 0 auto; padding: 28px 20px 44px;
   }
 
-  /* ── Hero bar ── */
+  /* Hero bar */
   .hero-bar {
     display: flex; align-items: center; justify-content: space-between;
     margin-bottom: 18px; animation: fadeUp 0.5s ease-out both; gap: 16px;
@@ -82,7 +78,7 @@
     border-radius: 22px 22px 0 0;
   }
 
-  /* ── Biggest News (hero) ── */
+  /* Biggest News hero */
   .hero-news {
     position: relative; margin-bottom: 18px; padding: 18px 22px;
     background: var(--glass-t2-bg); border: 1px solid var(--glass-t2-border);
@@ -105,9 +101,7 @@
   .hero-overview {
     font-size: 13.5px; line-height: 1.65; color: var(--text-body); margin-bottom: 14px;
   }
-  .hero-articles {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-  }
+  .hero-articles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .hero-article {
     display: flex; align-items: center; gap: 9px; padding: 9px 13px;
     border-radius: 9px; background: rgba(255,255,255,0.05);
@@ -120,13 +114,10 @@
   .hero-article .ha-icon { display: flex; flex-shrink: 0; }
   .hero-article .ha-icon svg { width: 13px; height: 13px; fill: var(--periwinkle); opacity: 0.7; }
 
-  /* ── Two-column layout ── */
-  .main-layout {
-    display: flex; gap: 16px;
-    animation: fadeUp 0.5s ease-out 0.1s both;
-  }
+  /* Two-column layout */
+  .main-layout { display: flex; gap: 16px; animation: fadeUp 0.5s ease-out 0.1s both; }
 
-  /* ── Sidebar nav ── */
+  /* Sidebar */
   .sidebar {
     display: flex; flex-direction: column; gap: 5px;
     width: 220px; flex-shrink: 0;
@@ -141,9 +132,7 @@
     white-space: nowrap; text-align: left;
     font-family: 'Roboto', sans-serif;
   }
-  .ch-btn:hover {
-    background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.90);
-  }
+  .ch-btn:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.90); }
   .ch-btn.active {
     background: var(--glass-t2-bg); border-color: var(--glass-t2-border);
     color: #fff; font-weight: 700;
@@ -157,7 +146,7 @@
   }
   .ch-btn.active .btn-dot { opacity: 1; }
 
-  /* ── Content card ── */
+  /* Content card */
   .content-area { flex: 1; min-width: 0; }
   .content-card {
     position: relative; background: var(--glass-t2-bg); border: 1px solid var(--glass-t2-border);
@@ -191,9 +180,7 @@
   .sect-label:first-of-type { margin-top: 0; }
 
   /* Axios-style insight */
-  .insight-text {
-    font-size: 13.5px; line-height: 1.65; color: var(--text-body);
-  }
+  .insight-text { font-size: 13.5px; line-height: 1.65; color: var(--text-body); }
   .insight-text .lead { font-weight: 700; color: var(--text-heading); }
 
   .rec-list { display: flex; flex-direction: column; gap: 5px; }
@@ -247,7 +234,7 @@
 
   .footer {
     text-align: center; margin-top: 24px; font-size: 11px;
-    color: var(--text-meta); letter-spacing: 0.04em;
+    color: var(--text-meta); letter-spacing: 0.04em; line-height: 1.6;
   }
 
   @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
@@ -255,7 +242,6 @@
   .card-body { animation: cardIn 0.25s ease-out both; }
   @keyframes cardIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* ── Mobile: stack to single column ── */
   @media (max-width: 760px) {
     .main-layout { flex-direction: column; }
     .sidebar {
@@ -289,7 +275,7 @@
   const ICONS = {
     'AI Tools & Platforms': '<svg viewBox="0 0 24 24"><path d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1-2.73 2.71-2.73 7.08 0 9.79s7.15 2.71 9.88 0C18.32 15.65 19 14.08 19 12.1h2c0 1.98-.88 4.55-2.64 6.29-3.51 3.48-9.21 3.48-12.72 0-3.5-3.47-3.53-9.11-.02-12.58s9.14-3.49 12.65 0L21 3v7.12zM12.5 8v4.25l3.5 2.08-.72 1.21L11 13V8h1.5z"/></svg>',
     'SEO & GEO': '<svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>',
-    'Paid Search': '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95.49-7.4-2.43-7.93-6.37C4.53 9.61 7.96 6.12 12 6.07V2l5 5-5 5V8.07c-2.76.44-4.77 2.99-4.33 5.75.37 2.27 2.06 3.96 4.33 4.33v1.78zm6.07-4.56c-.18.67-.46 1.31-.84 1.88l-1.46-1.46c.22-.36.39-.75.51-1.17l1.79.75zM13 12.07v-2l5 5-1.79.75c-.37-.79-.91-1.49-1.57-2.05L13 12.07z"/></svg>',
+    'Paid Search': '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95.49-7.4-2.43-7.93-6.37C4.53 9.61 7.96 6.12 12 6.07V2l5 5-5 5V8.07c-2.76.44-4.77 2.99-4.33 5.75.37 2.27 2.06 3.96 4.33 4.33v1.78zm6.07-4.56c-.18.67-.46 1.31-.84 1.88l-1.46-1.46c.22-.36.39-.75.51-1.17l1.79.75z"/></svg>',
     'Paid Social': '<svg viewBox="0 0 24 24"><path d="M18 11v2h4v-2h-4zm-2 6.61c.96.71 2.21 1.65 3.2 2.39.4-.53.8-1.07 1.2-1.6-.99-.74-2.24-1.68-3.2-2.4-.4.54-.8 1.08-1.2 1.61zM20.4 5.6c-.4-.53-.8-1.07-1.2-1.6-.99.74-2.24 1.68-3.2 2.4.4.53.8 1.07 1.2 1.6.96-.72 2.21-1.65 3.2-2.4zM4 9c-1.1 0-2 .9-2 2v2c0 1.1.9 2 2 2h1l5 3V6L5 9H4zm11.5 3c0-1.33-.58-2.53-1.5-3.35v6.69c.92-.81 1.5-2.01 1.5-3.34z"/></svg>',
     'Content & PR': '<svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>',
     'Design & Creative': '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
@@ -314,7 +300,6 @@
   ];
 
   let dataByChannel = {};
-  let heroData = null;
   let activeChannel = null;
 
   function norm(record) {
@@ -334,11 +319,11 @@
     return Array.isArray(json) ? json : (json.records || json.data || []);
   }
 
-  /* Format insight text: bold the first sentence (Axios-style lead) */
+  /* Axios-style: bold first sentence */
   function formatInsight(text) {
     if (!text) return '';
     const periodIdx = text.indexOf('. ');
-    if (periodIdx === -1 || periodIdx > 180) {
+    if (periodIdx === -1 || periodIdx > 200) {
       return '<span class="lead">' + text + '</span>';
     }
     const lead = text.slice(0, periodIdx + 1);
@@ -346,14 +331,11 @@
     return '<span class="lead">' + lead + '</span> ' + rest;
   }
 
-  /* Build summary headline from all insights */
   function buildSummaryHeadline(records) {
-    // Look for a Hero record first
     for (const r of records) {
       const f = norm(r);
       if (f.Channel === 'Hero' && f.ToDo1) return f.ToDo1;
     }
-    // Fallback: first AI Tools insight as headline
     for (const r of records) {
       const f = norm(r);
       if (f.Channel === 'AI Tools & Platforms' && f.Insight) {
@@ -367,7 +349,6 @@
   function buildSummaryBody(records) {
     const bits = [];
     const seen = new Set();
-    // Exclude Hero and AI Tools (used in headline)
     records.forEach(r => {
       const f = norm(r);
       if (f.Channel && f.Channel !== 'Hero' && f.Channel !== 'AI Tools & Platforms' && !seen.has(f.Channel) && f.Insight) {
@@ -380,7 +361,6 @@
   }
 
   function getHeroArticles(records) {
-    // Look for Hero record first
     for (const r of records) {
       const f = norm(r);
       if (f.Channel === 'Hero') {
@@ -390,7 +370,6 @@
         };
       }
     }
-    // Fallback: pull from AI Tools & Platforms
     for (const r of records) {
       const f = norm(r);
       if (f.Channel === 'AI Tools & Platforms') {
@@ -401,6 +380,14 @@
       }
     }
     return { art1: '', url1: '', art2: '', url2: '' };
+  }
+
+  function getHeroOverview(records) {
+    for (const r of records) {
+      const f = norm(r);
+      if (f.Channel === 'Hero' && f.Insight) return f.Insight;
+    }
+    return '';
   }
 
   function renderApp(records) {
@@ -416,65 +403,58 @@
       }
     });
 
-    activeChannel = CHANNELS[0].key; // AI Tools & Platforms
+    activeChannel = CHANNELS[0].key;
 
     const heroHeadline = buildSummaryHeadline(records);
-    const heroBody = buildSummaryBody(records);
+    const heroBody = getHeroOverview(records) || buildSummaryBody(records);
     const heroArts = getHeroArticles(records);
     const artIcon = ICONS['article'];
 
     let html = '';
 
-    /* Hero bar */
-    html += `
-    <div class="hero-bar">
-      <div class="hero-title">Today's News: Marketing Channel Briefing</div>
-      <div class="hero-date-pill">${formatDateShort(dateStr)}</div>
-    </div>`;
+    html += '<div class="hero-bar">' +
+      '<div class="hero-title">Today\'s News: Marketing Channel Briefing</div>' +
+      '<div class="hero-date-pill">' + formatDateShort(dateStr) + '</div>' +
+    '</div>';
 
-    /* Biggest News */
-    html += `
-    <div class="hero-news">
-      <div class="hero-news-label">Biggest News</div>
-      <div class="hero-headline">${heroHeadline}</div>
-      ${heroBody ? `<div class="hero-overview">${heroBody}</div>` : ''}
-      ${(heroArts.art1 && heroArts.url1) || (heroArts.art2 && heroArts.url2) ? `
-      <div class="hero-articles">
-        ${heroArts.art1 && heroArts.url1 ? `<a class="hero-article" href="${heroArts.url1}" target="_blank" rel="noopener"><span class="ha-icon">${artIcon}</span><span>${heroArts.art1}</span><span class="arrow">↗</span></a>` : ''}
-        ${heroArts.art2 && heroArts.url2 ? `<a class="hero-article" href="${heroArts.url2}" target="_blank" rel="noopener"><span class="ha-icon">${artIcon}</span><span>${heroArts.art2}</span><span class="arrow">↗</span></a>` : ''}
-      </div>` : ''}
-    </div>`;
+    html += '<div class="hero-news">' +
+      '<div class="hero-news-label">Biggest News</div>' +
+      '<div class="hero-headline">' + heroHeadline + '</div>' +
+      (heroBody ? '<div class="hero-overview">' + heroBody + '</div>' : '');
+    if ((heroArts.art1 && heroArts.url1) || (heroArts.art2 && heroArts.url2)) {
+      html += '<div class="hero-articles">';
+      if (heroArts.art1 && heroArts.url1) html += '<a class="hero-article" href="' + heroArts.url1 + '" target="_blank" rel="noopener"><span class="ha-icon">' + artIcon + '</span><span>' + heroArts.art1 + '</span><span class="arrow">↗</span></a>';
+      if (heroArts.art2 && heroArts.url2) html += '<a class="hero-article" href="' + heroArts.url2 + '" target="_blank" rel="noopener"><span class="ha-icon">' + artIcon + '</span><span>' + heroArts.art2 + '</span><span class="arrow">↗</span></a>';
+      html += '</div>';
+    }
+    html += '</div>';
 
-    /* Two-column: sidebar + content */
     html += '<div class="main-layout">';
 
-    /* Sidebar */
     html += '<div class="sidebar" id="sidebarNav">';
     CHANNELS.forEach(c => {
       const isActive = c.key === activeChannel;
-      const hasData = !!dataByChannel[c.key];
-      html += `<button class="ch-btn${isActive ? ' active' : ''}" data-key="${c.key}">
-        <span class="btn-dot" style="background:${c.dot}"></span>
-        <span class="btn-icon">${ICONS[c.key]}</span>
-        <span>${c.key}</span>
-      </button>`;
+      html += '<button class="ch-btn' + (isActive ? ' active' : '') + '" data-key="' + c.key + '">' +
+        '<span class="btn-dot" style="background:' + c.dot + '"></span>' +
+        '<span class="btn-icon">' + ICONS[c.key] + '</span>' +
+        '<span>' + c.key + '</span>' +
+      '</button>';
     });
     html += '</div>';
 
-    /* Content area */
     html += '<div class="content-area" id="contentCard"></div>';
     html += '</div>';
 
-    html += '<div class="footer">Auto-refreshed daily at 6:00 AM ET · USF AI Marketing Hub</div>';
+    html += '<div class="footer">AI-generated. Treat all claims as unverified until confirmed by a human source.<br>Auto-refreshed daily at 6:00 AM ET · USF AI Marketing Hub</div>';
 
     app.innerHTML = html;
 
-    document.querySelectorAll('.ch-btn').forEach(btn => {
+    document.querySelectorAll('.ch-btn').forEach(function(btn) {
       btn.addEventListener('click', function() {
-        const key = this.dataset.key;
+        var key = this.dataset.key;
         if (key === activeChannel) return;
         activeChannel = key;
-        document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.ch-btn').forEach(function(b) { b.classList.remove('active'); });
         this.classList.add('active');
         renderCard();
       });
@@ -484,87 +464,85 @@
   }
 
   function renderCard() {
-    const container = document.getElementById('contentCard');
-    const ch = CHANNELS.find(c => c.key === activeChannel);
+    var container = document.getElementById('contentCard');
+    var ch = CHANNELS.find(function(c) { return c.key === activeChannel; });
     if (!ch) return;
 
-    const data = dataByChannel[ch.key];
-    const icon = ICONS[ch.key];
-    const artIcon = ICONS['article'];
+    var data = dataByChannel[ch.key];
+    var icon = ICONS[ch.key];
+    var artIcon = ICONS['article'];
 
     if (!data) {
-      container.innerHTML = `
-      <div class="content-card"><div class="card-body">
-        <div class="card-ch-header">
-          <div class="card-ch-icon" style="background:${ch.grad}">${icon}</div>
-          <div class="card-ch-name">${ch.key}</div>
-        </div>
-        <div class="empty-state">No update for this channel today.</div>
-      </div></div>`;
+      container.innerHTML = '<div class="content-card"><div class="card-body">' +
+        '<div class="card-ch-header">' +
+          '<div class="card-ch-icon" style="background:' + ch.grad + '">' + icon + '</div>' +
+          '<div class="card-ch-name">' + ch.key + '</div>' +
+        '</div>' +
+        '<div class="empty-state">No update for this channel today.</div>' +
+      '</div></div>';
       return;
     }
 
-    const insight = data.Insight || '';
-    const todo1   = data.ToDo1 || '';
-    const todo2   = data.ToDo2 || '';
-    const art1    = data['Article Title'] || '';
-    const url1    = data['Article URL'] || '';
-    const art2    = data['Article Title 2'] || '';
-    const url2    = data['Article URL 2'] || '';
-    const stack   = data.Stack || '';
+    var insight = data.Insight || '';
+    var todo1   = data.ToDo1 || '';
+    var todo2   = data.ToDo2 || '';
+    var art1    = data['Article Title'] || '';
+    var url1    = data['Article URL'] || '';
+    var art2    = data['Article Title 2'] || '';
+    var url2    = data['Article URL 2'] || '';
+    var stack   = data.Stack || '';
 
-    let inner = `
-    <div class="card-ch-header">
-      <div class="card-ch-icon" style="background:${ch.grad}">${icon}</div>
-      <div class="card-ch-name">${ch.key}</div>
-    </div>`;
+    var inner = '<div class="card-ch-header">' +
+      '<div class="card-ch-icon" style="background:' + ch.grad + '">' + icon + '</div>' +
+      '<div class="card-ch-name">' + ch.key + '</div>' +
+    '</div>';
 
     if (insight) {
-      inner += `<div class="sect-label">Insight</div><div class="insight-text">${formatInsight(insight)}</div>`;
+      inner += '<div class="sect-label">Insight</div><div class="insight-text">' + formatInsight(insight) + '</div>';
     }
 
     if (todo1 || todo2) {
-      inner += `<div class="sect-label">Recommendations</div><div class="rec-list">`;
-      if (todo1) inner += `<div class="rec-item"><span class="rec-dot" style="background:${ch.dot}"></span><span>${todo1}</span></div>`;
-      if (todo2) inner += `<div class="rec-item"><span class="rec-dot" style="background:${ch.dot}"></span><span>${todo2}</span></div>`;
+      inner += '<div class="sect-label">Recommendations</div><div class="rec-list">';
+      if (todo1) inner += '<div class="rec-item"><span class="rec-dot" style="background:' + ch.dot + '"></span><span>' + todo1 + '</span></div>';
+      if (todo2) inner += '<div class="rec-item"><span class="rec-dot" style="background:' + ch.dot + '"></span><span>' + todo2 + '</span></div>';
       inner += '</div>';
     }
 
     if ((art1 && url1) || (art2 && url2)) {
-      inner += `<div class="sect-label">Reading</div><div class="article-list">`;
-      if (art1 && url1) inner += `<a class="article-link" href="${url1}" target="_blank" rel="noopener"><span class="link-icon">${artIcon}</span><span>${art1}</span><span class="arrow">↗</span></a>`;
-      if (art2 && url2) inner += `<a class="article-link" href="${url2}" target="_blank" rel="noopener"><span class="link-icon">${artIcon}</span><span>${art2}</span><span class="arrow">↗</span></a>`;
+      inner += '<div class="sect-label">Reading</div><div class="article-list">';
+      if (art1 && url1) inner += '<a class="article-link" href="' + url1 + '" target="_blank" rel="noopener"><span class="link-icon">' + artIcon + '</span><span>' + art1 + '</span><span class="arrow">↗</span></a>';
+      if (art2 && url2) inner += '<a class="article-link" href="' + url2 + '" target="_blank" rel="noopener"><span class="link-icon">' + artIcon + '</span><span>' + art2 + '</span><span class="arrow">↗</span></a>';
       inner += '</div>';
     }
 
     if (stack) {
-      inner += `<div class="sect-label">Current Stack</div><div class="stack-pills">`;
-      stack.split(',').forEach(s => {
-        const t = s.trim();
-        if (t) inner += `<span class="stack-pill">${t}</span>`;
+      inner += '<div class="sect-label">Current Stack</div><div class="stack-pills">';
+      stack.split(',').forEach(function(s) {
+        var t = s.trim();
+        if (t) inner += '<span class="stack-pill">' + t + '</span>';
       });
       inner += '</div>';
     }
 
-    container.innerHTML = `<div class="content-card"><div class="card-body">${inner}</div></div>`;
+    container.innerHTML = '<div class="content-card"><div class="card-body">' + inner + '</div></div>';
   }
 
   function renderError(msg) {
-    document.getElementById('app').innerHTML = `
-      <div class="hero-bar">
-        <div class="hero-title">Today's News: Marketing Channel Briefing</div>
-        <div class="hero-date-pill">${formatDateShort()}</div>
-      </div>
-      <div class="error-container">
-        <div class="error-icon">⚠</div>
-        <div class="error-msg">${msg}</div>
-        <button class="retry-btn" onclick="location.reload()">Retry</button>
-      </div>`;
+    document.getElementById('app').innerHTML =
+      '<div class="hero-bar">' +
+        '<div class="hero-title">Today\'s News: Marketing Channel Briefing</div>' +
+        '<div class="hero-date-pill">' + formatDateShort() + '</div>' +
+      '</div>' +
+      '<div class="error-container">' +
+        '<div class="error-icon">⚠</div>' +
+        '<div class="error-msg">' + msg + '</div>' +
+        '<button class="retry-btn" onclick="location.reload()">Retry</button>' +
+      '</div>';
   }
 
   fetchData()
-    .then(records => renderApp(records))
-    .catch(err => {
+    .then(function(records) { renderApp(records); })
+    .catch(function(err) {
       console.error('Fetch failed:', err);
       renderError('Could not load today\'s briefing. Confirm the n8n automation has run and the API endpoint is reachable.');
     });
