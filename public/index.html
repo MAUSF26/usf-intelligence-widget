@@ -49,7 +49,7 @@
   .hero-logo-block { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; }
   .hero-logo-svg { height: 25px; width: auto; max-width: 180px; display: block; }
   .hero-title-line { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.55); }
-  .hero-app-name { font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.92); letter-spacing: 0.01em; }
+  .hero-logo-spacer { height: 10px; }
 
   /* date pill */
   .hero-date-block { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
@@ -65,7 +65,7 @@
   .trending-panel::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent); border-radius: 13px 13px 0 0; }
   /* trending label — NO extending line after it */
   .trending-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255,255,255,0.50); margin-bottom: 8px; }
-  .hero-headline { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.45; margin-bottom: 9px; }
+  .hero-headline { font-size: 16px; font-weight: 700; color: #fff; line-height: 1.45; margin-bottom: 9px; }
   .hero-overview { font-size: 13px; line-height: 1.65; color: rgba(255,255,255,0.78); margin-bottom: 13px; }
   .hero-overview strong { color: #fff; }
   .hero-articles { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
@@ -160,15 +160,16 @@
   .link-icon svg { width: 12px; height: 12px; fill: var(--periwinkle); opacity: 0.65; }
   .article-meta { font-size: 11px; color: var(--text-meta); padding-left: 21px; }
 
-  /* stack pills — periwinkle→cranberry gradient */
+  /* stack pills — rectangular with cranberry glow */
   .stack-pills { display: flex; flex-wrap: wrap; gap: 6px; }
   .stack-pill {
-    padding: 4px 13px; border-radius: 20px;
-    background: var(--grad-sweep);
+    padding: 5px 12px; border-radius: 8px;
+    background: rgba(133,41,140,0.18);
+    border: 1px solid rgba(133,41,140,0.45);
     font-size: 11px; font-weight: 600;
-    color: #fff;
+    color: rgba(224,180,228,0.95);
     letter-spacing: 0.02em;
-    box-shadow: 0 1px 6px rgba(133,41,140,0.30);
+    box-shadow: 0 0 8px rgba(133,41,140,0.25);
   }
 
   /* perspective coming soon */
@@ -200,8 +201,9 @@
     .ch-icon-bubble { display: none; }
     .hero-articles { grid-template-columns: 1fr; }
     .app { padding: 16px 14px 32px; }
-    .hero-top-row { flex-direction: column; gap: 10px; }
-    .hero-date-block { align-items: flex-start; }
+    .hero-top-row { flex-wrap: wrap; gap: 10px; }
+    .hero-logo-block { flex: 1; min-width: 0; }
+    .hero-date-block { flex-shrink: 0; align-items: flex-end; }
     .content-card { padding: 18px 16px; }
   }
 </style>
@@ -299,7 +301,7 @@ function renderApp(records){
   h+='<div class="hero-logo-block">';
   h+=USF_LOGO_SVG;
   h+='<div class="hero-title-line">AI Marketing Intelligence</div>';
-  h+='<div class="hero-app-name">Daily News</div>';
+  h+='<div class="hero-logo-spacer"></div>';
   h+='</div>';
   h+='<div class="hero-date-block">';
   h+='<div class="hero-date-pill"><span class="pulse-dot"></span><span class="hero-date-text">'+fmtDate(briefingDate)+'</span></div>';
