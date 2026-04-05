@@ -15,7 +15,9 @@
     --grad-sweep: linear-gradient(135deg, #8598E3 0%, #85298C 100%);
     --grad-gold: linear-gradient(135deg, #b88a00 0%, #FFBB06 100%);
     --grad-mint: linear-gradient(135deg, #2a7a48 0%, #8DCA8B 100%);
+    --grad-hero: linear-gradient(135deg, #261759 0%, #3d2580 30%, #6644aa 60%, #85298C 100%);
     --canvas: linear-gradient(135deg, #1a0d3d 0%, #261759 35%, #3a1060 65%, #4a1555 100%);
+    --glass-t1-bg: rgba(255,255,255,0.05);
     --glass-t2-bg: rgba(255,255,255,0.08);
     --glass-t2-border: rgba(255,255,255,0.15);
     --text-heading: rgba(255,255,255,0.97);
@@ -26,84 +28,278 @@
   }
   html { font-size: 16px; }
   body { font-family: 'Roboto', sans-serif; background: var(--canvas); color: var(--text-body); min-height: 100vh; position: relative; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-  body::before, body::after { content: ''; position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; }
-  body::before { width: 850px; height: 850px; top: -320px; right: -260px; background: radial-gradient(circle, rgba(133,152,227,0.18) 0%, transparent 68%); }
-  body::after { width: 750px; height: 750px; bottom: -280px; left: -230px; background: radial-gradient(circle, rgba(133,41,140,0.15) 0%, transparent 68%); }
+  body::before { content: ''; position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; width: 850px; height: 850px; top: -320px; right: -260px; background: radial-gradient(circle, rgba(133,152,227,0.18) 0%, transparent 68%); }
+  body::after { content: ''; position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; width: 750px; height: 750px; bottom: -280px; left: -230px; background: radial-gradient(circle, rgba(133,41,140,0.15) 0%, transparent 68%); }
   .blob-teal { position: fixed; width: 550px; height: 550px; top: 45%; left: -15%; background: radial-gradient(circle, rgba(14,99,93,0.12) 0%, transparent 68%); border-radius: 50%; pointer-events: none; z-index: 0; }
-  .app { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 28px 20px 44px; }
+  .app { position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; padding: 28px 20px 44px; }
 
-  /* HERO CARD — merged title + date + biggest news */
-  .hero-card { position: relative; margin-bottom: 18px; padding: 20px 24px 22px; background: var(--glass-t2-bg); border: 1px solid var(--glass-t2-border); border-radius: 16px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); animation: fadeUp 0.5s ease-out both; }
-  .hero-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent); border-radius: 16px 16px 0 0; }
-  .hero-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; gap: 16px; }
-  .hero-eyebrow { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-meta); margin-bottom: 5px; }
-  .hero-title { font-size: 20px; font-weight: 700; color: var(--text-heading); line-height: 1.25; }
-  .hero-title .gx { background: var(--grad-sweep); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .hero-meta-strip { display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0; }
-  .hero-date { font-size: 13px; font-weight: 600; color: var(--text-heading); margin-bottom: 2px; }
-  .hero-refresh { font-size: 11px; color: var(--text-meta); }
-  .hero-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.10), transparent); margin-bottom: 14px; }
-  .biggest-news-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-meta); margin-bottom: 8px; }
-  .hero-headline { font-size: 16px; font-weight: 700; color: var(--text-heading); line-height: 1.45; margin-bottom: 10px; }
-  .hero-overview { font-size: 13.5px; line-height: 1.65; color: var(--text-body); margin-bottom: 14px; }
+  /* HERO CARD */
+  .hero-card {
+    position: relative;
+    margin-bottom: 18px;
+    padding: 22px 26px 24px;
+    background: var(--grad-hero);
+    border: 1px solid rgba(133,152,227,0.35);
+    border-radius: 18px;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    overflow: hidden;
+    animation: fadeUp 0.5s ease-out both;
+  }
+  .hero-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(255,255,255,0.04);
+    border-radius: 18px;
+    pointer-events: none;
+  }
+  .hero-card::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+    border-radius: 18px 18px 0 0;
+  }
+  /* subtle noise texture overlay */
+  .hero-noise {
+    position: absolute; inset: 0; border-radius: 18px; pointer-events: none; opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  .hero-top-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    gap: 16px;
+    position: relative;
+  }
+  .hero-logo-eyebrow { display: flex; flex-direction: column; gap: 10px; }
+  .hero-logo img, .hero-logo svg { height: 28px; width: auto; max-width: 200px; display: block; }
+  .hero-title-line {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.60);
+  }
+
+  /* date pill with pulse */
+  .hero-date-block { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+  .hero-date-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.22);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .pulse-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #8DCA8B;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .pulse-dot::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: rgba(141,202,139,0.4);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.6); opacity: 0; }
+  }
+  .hero-date-text { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.90); }
+  .hero-refresh-line { font-size: 11px; color: rgba(255,255,255,0.45); }
+
+  .hero-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  /* Trending news inner panel — frosted glass within hero */
+  .trending-panel {
+    position: relative;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 13px;
+    padding: 16px 18px 18px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .trending-panel::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    border-radius: 13px 13px 0 0;
+  }
+  .trending-label {
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.50);
+    margin-bottom: 9px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .trending-label::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
+  .hero-headline { font-size: 15.5px; font-weight: 700; color: var(--text-heading); line-height: 1.45; margin-bottom: 9px; }
+  .hero-overview { font-size: 13px; line-height: 1.65; color: rgba(255,255,255,0.78); margin-bottom: 13px; }
   .hero-overview strong { color: var(--text-heading); }
-  .hero-articles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .hero-article { display: flex; flex-direction: column; gap: 4px; padding: 10px 13px; border-radius: 9px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); text-decoration: none; font-size: 12.5px; color: var(--periwinkle); transition: background 0.15s, border-color 0.15s; line-height: 1.45; }
-  .hero-article:hover { background: rgba(133,152,227,0.12); border-color: rgba(133,152,227,0.25); }
-  .hero-article .ha-title { display: flex; align-items: center; gap: 8px; }
-  .hero-article .ha-icon { display: flex; flex-shrink: 0; }
-  .hero-article .ha-icon svg { width: 13px; height: 13px; fill: var(--periwinkle); opacity: 0.7; }
-  .hero-article .arrow { font-size: 11px; color: var(--text-meta); margin-left: auto; flex-shrink: 0; }
-  .hero-article .ha-meta { font-size: 11px; color: var(--text-meta); }
+  .hero-articles { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+  .hero-article {
+    display: flex; flex-direction: column; gap: 4px;
+    padding: 9px 12px; border-radius: 9px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.10);
+    text-decoration: none; font-size: 12px;
+    color: rgba(133,152,227,0.95);
+    transition: background 0.15s, border-color 0.15s; line-height: 1.45;
+  }
+  .hero-article:hover { background: rgba(133,152,227,0.14); border-color: rgba(133,152,227,0.28); }
+  .ha-title { display: flex; align-items: flex-start; gap: 7px; }
+  .ha-icon { display: flex; flex-shrink: 0; margin-top: 1px; }
+  .ha-icon svg { width: 12px; height: 12px; fill: var(--periwinkle); opacity: 0.7; }
+  .ha-arrow { font-size: 10px; color: rgba(255,255,255,0.35); margin-left: auto; flex-shrink: 0; padding-top: 1px; }
+  .ha-meta { font-size: 10.5px; color: rgba(255,255,255,0.40); padding-left: 19px; }
 
   /* MAIN LAYOUT */
   .main-layout { display: flex; gap: 16px; animation: fadeUp 0.5s ease-out 0.1s both; }
 
-  /* SIDEBAR — grouped */
-  .sidebar { display: flex; flex-direction: column; width: 215px; flex-shrink: 0; position: sticky; top: 28px; align-self: flex-start; gap: 4px; }
-  .sidebar-section { display: flex; flex-direction: column; }
-  .sidebar-section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-meta); padding: 8px 14px 5px; display: flex; align-items: center; gap: 8px; }
-  .sidebar-section-label::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
-  .ch-btn { position: relative; display: flex; align-items: center; gap: 9px; padding: 8px 14px 8px 16px; border-radius: 10px; border: 1px solid transparent; background: transparent; color: var(--text-sub); font-size: 12.5px; font-weight: 500; cursor: pointer; transition: all 0.18s ease; user-select: none; text-align: left; font-family: 'Roboto', sans-serif; overflow: hidden; }
-  .ch-btn::before { content: ''; position: absolute; left: 0; top: 20%; bottom: 20%; width: 3px; border-radius: 0 3px 3px 0; background: var(--grad-sweep); opacity: 0; transition: opacity 0.18s ease; }
+  /* SIDEBAR */
+  .sidebar { display: flex; flex-direction: column; width: 210px; flex-shrink: 0; position: sticky; top: 28px; align-self: flex-start; gap: 2px; }
+
+  /* section tab switcher */
+  .sidebar-tabs {
+    display: flex; gap: 4px; margin-bottom: 8px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 10px; padding: 3px;
+  }
+  .sidebar-tab {
+    flex: 1; padding: 6px 4px; border-radius: 7px; border: none;
+    background: transparent; color: var(--text-meta);
+    font-size: 11px; font-weight: 700; cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    transition: all 0.18s ease;
+  }
+  .sidebar-tab.active {
+    background: var(--grad-sweep);
+    color: #fff;
+    box-shadow: 0 1px 6px rgba(133,41,140,0.35);
+  }
+  .sidebar-tab:not(.active):hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.80); }
+
+  .channel-list { display: flex; flex-direction: column; gap: 1px; }
+
+  .ch-btn {
+    position: relative; display: flex; align-items: center; gap: 9px;
+    padding: 8px 12px 8px 15px; border-radius: 10px;
+    border: 1px solid transparent; background: transparent;
+    color: var(--text-sub); font-size: 12px; font-weight: 500;
+    cursor: pointer; transition: all 0.18s ease; user-select: none;
+    text-align: left; font-family: 'Roboto', sans-serif; overflow: hidden;
+  }
+  .ch-btn::before {
+    content: ''; position: absolute; left: 0; top: 18%; bottom: 18%;
+    width: 3px; border-radius: 0 3px 3px 0;
+    background: var(--grad-sweep); opacity: 0; transition: opacity 0.18s;
+  }
   .ch-btn:hover { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.88); }
   .ch-btn.active { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.13); color: #fff; font-weight: 700; }
   .ch-btn.active::before { opacity: 1; }
-  .ch-btn .btn-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; opacity: 0.6; transition: opacity 0.18s; }
+  .ch-btn .btn-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; opacity: 0.55; transition: opacity 0.18s; }
   .ch-btn.active .btn-dot { opacity: 1; }
-  .ch-btn .btn-icon { width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; opacity: 0.65; transition: opacity 0.18s; }
+  .ch-btn .btn-icon { width: 15px; height: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; opacity: 0.60; transition: opacity 0.18s; }
   .ch-btn.active .btn-icon { opacity: 1; }
-  .ch-btn .btn-icon svg { width: 14px; height: 14px; fill: currentColor; }
-  .ch-btn-label { flex: 1; }
+  .ch-btn .btn-icon svg { width: 13px; height: 13px; fill: currentColor; }
+  .ch-btn-label { flex: 1; line-height: 1.3; }
+
+  /* perspective badge on btn */
+  .persp-tag {
+    font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+    padding: 2px 6px; border-radius: 4px;
+    background: rgba(133,152,227,0.15); border: 1px solid rgba(133,152,227,0.25);
+    color: rgba(133,152,227,0.85); flex-shrink: 0;
+  }
 
   /* CONTENT AREA */
   .content-area { flex: 1; min-width: 0; }
-  .content-card { position: relative; background: var(--glass-t2-bg); border: 1px solid var(--glass-t2-border); border-radius: 16px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 22px 24px; min-height: 200px; }
-  .content-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent); border-radius: 16px 16px 0 0; }
+  .content-card {
+    position: relative; background: var(--glass-t2-bg);
+    border: 1px solid var(--glass-t2-border); border-radius: 16px;
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    padding: 22px 24px; min-height: 220px;
+  }
+  .content-card::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+    border-radius: 16px 16px 0 0;
+  }
   .card-body { animation: cardIn 0.22s ease-out both; }
   .card-ch-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
-  .card-ch-icon { width: 38px; height: 38px; border-radius: 11px; display: flex; align-items: center; justify-content: center; position: relative; flex-shrink: 0; }
-  .card-ch-icon::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.32), transparent); border-radius: 11px 11px 0 0; }
+  .card-ch-icon {
+    width: 38px; height: 38px; border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; flex-shrink: 0;
+  }
+  .card-ch-icon::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.32), transparent);
+    border-radius: 11px 11px 0 0;
+  }
   .card-ch-icon svg { width: 18px; height: 18px; fill: #fff; }
+  .card-ch-meta { display: flex; flex-direction: column; gap: 3px; }
   .card-ch-name { font-size: 16px; font-weight: 700; color: var(--text-heading); }
-  .card-ch-date { font-size: 11px; color: var(--text-meta); margin-top: 1px; }
-  .sect-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-meta); margin-bottom: 7px; margin-top: 18px; }
+  .card-ch-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.10em; color: var(--text-meta); }
+  .card-ch-date { font-size: 11px; color: var(--text-meta); }
+
+  .sect-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--text-meta);
+    margin-bottom: 7px; margin-top: 18px;
+  }
   .sect-label:first-of-type { margin-top: 0; }
   .insight-text { font-size: 13.5px; line-height: 1.65; color: var(--text-body); }
   .insight-text strong { color: var(--text-heading); font-weight: 700; }
   .rec-list { display: flex; flex-direction: column; gap: 5px; }
-  .rec-item { display: flex; align-items: flex-start; gap: 9px; padding: 9px 12px; border-radius: 9px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); font-size: 12.5px; line-height: 1.5; color: rgba(255,255,255,0.90); }
+  .rec-item {
+    display: flex; align-items: flex-start; gap: 9px;
+    padding: 9px 12px; border-radius: 9px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
+    font-size: 12.5px; line-height: 1.5; color: rgba(255,255,255,0.90);
+  }
   .rec-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
   .article-list { display: flex; flex-direction: column; gap: 6px; }
-  .article-link { display: flex; flex-direction: column; gap: 3px; padding: 9px 13px; border-radius: 9px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); text-decoration: none; transition: background 0.15s, border-color 0.15s; line-height: 1.45; }
+  .article-link {
+    display: flex; flex-direction: column; gap: 3px;
+    padding: 9px 13px; border-radius: 9px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+    text-decoration: none; transition: background 0.15s, border-color 0.15s;
+  }
   .article-link:hover { background: rgba(133,152,227,0.12); border-color: rgba(133,152,227,0.25); }
-  .article-title-row { display: flex; align-items: center; gap: 9px; font-size: 12.5px; color: var(--periwinkle); }
-  .article-title-row .arrow { font-size: 11px; color: var(--text-meta); margin-left: auto; flex-shrink: 0; }
-  .link-icon { display: flex; align-items: center; flex-shrink: 0; }
-  .link-icon svg { width: 13px; height: 13px; fill: var(--periwinkle); opacity: 0.7; }
-  .article-meta { font-size: 11px; color: var(--text-meta); padding-left: 22px; }
+  .article-title-row { display: flex; align-items: flex-start; gap: 9px; font-size: 12.5px; color: var(--periwinkle); line-height: 1.45; }
+  .article-title-row .arrow { font-size: 11px; color: var(--text-meta); margin-left: auto; flex-shrink: 0; padding-top: 2px; }
+  .link-icon { display: flex; align-items: center; flex-shrink: 0; margin-top: 2px; }
+  .link-icon svg { width: 12px; height: 12px; fill: var(--periwinkle); opacity: 0.65; }
+  .article-meta { font-size: 11px; color: var(--text-meta); padding-left: 21px; }
   .stack-pills { display: flex; flex-wrap: wrap; gap: 6px; }
   .stack-pill { padding: 4px 12px; border-radius: 20px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.18); font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.88); }
+
+  /* perspective coming soon state */
+  .perspective-soon {
+    text-align: center; padding: 36px 20px;
+  }
+  .perspective-soon-icon { font-size: 28px; margin-bottom: 10px; opacity: 0.5; }
+  .perspective-soon-title { font-size: 14px; font-weight: 700; color: var(--text-heading); margin-bottom: 6px; }
+  .perspective-soon-body { font-size: 12.5px; color: var(--text-sub); line-height: 1.6; max-width: 320px; margin: 0 auto; }
+
   .empty-state { text-align: center; padding: 28px 16px; color: var(--text-sub); font-size: 13px; }
   .loading-container { text-align: center; padding: 80px 20px; }
   .loading-spinner { width: 36px; height: 36px; border: 3px solid rgba(255,255,255,0.10); border-top-color: var(--periwinkle); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 14px; }
@@ -118,20 +314,15 @@
   @keyframes spin { to { transform: rotate(360deg); } }
   @keyframes cardIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
-  @media (max-width: 760px) {
+  @media (max-width: 800px) {
     .main-layout { flex-direction: column; }
-    .sidebar { flex-direction: row; flex-wrap: wrap; width: 100%; position: static; gap: 5px; }
-    .sidebar-section { display: contents; }
-    .sidebar-section-label { display: none; }
-    .ch-btn { padding: 6px 12px; font-size: 11.5px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.10); }
-    .ch-btn::before { display: none; }
-    .ch-btn.active { background: rgba(133,152,227,0.15); border-color: rgba(133,152,227,0.30); }
-    .ch-btn .btn-icon, .ch-btn .btn-dot { display: none; }
+    .sidebar { flex-direction: column; width: 100%; position: static; }
+    .sidebar-tabs { max-width: 280px; }
+    .ch-btn { font-size: 12px; }
     .hero-articles { grid-template-columns: 1fr; }
     .app { padding: 16px 14px 32px; }
-    .hero-card-top { flex-direction: column; gap: 6px; }
-    .hero-meta-strip { align-items: flex-start; }
-    .hero-title { font-size: 17px; }
+    .hero-top-row { flex-direction: column; gap: 10px; }
+    .hero-date-block { align-items: flex-start; }
     .content-card { padding: 18px 16px; }
   }
 </style>
@@ -143,188 +334,269 @@
 </div>
 <script>
 (function() {
-  var ICONS = {
-    'AI Tools & Platforms':'<svg viewBox="0 0 24 24"><path d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1-2.73 2.71-2.73 7.08 0 9.79s7.15 2.71 9.88 0C18.32 15.65 19 14.08 19 12.1h2c0 1.98-.88 4.55-2.64 6.29-3.51 3.48-9.21 3.48-12.72 0-3.5-3.47-3.53-9.11-.02-12.58s9.14-3.49 12.65 0L21 3v7.12zM12.5 8v4.25l3.5 2.08-.72 1.21L11 13V8h1.5z"/></svg>',
-    'SEO & GEO':'<svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>',
-    'Paid Search':'<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95.49-7.4-2.43-7.93-6.37C4.53 9.61 7.96 6.12 12 6.07V2l5 5-5 5V8.07c-2.76.44-4.77 2.99-4.33 5.75.37 2.27 2.06 3.96 4.33 4.33v1.78zm6.07-4.56c-.18.67-.46 1.31-.84 1.88l-1.46-1.46c.22-.36.39-.75.51-1.17l1.79.75z"/></svg>',
-    'Paid Social':'<svg viewBox="0 0 24 24"><path d="M18 11v2h4v-2h-4zm-2 6.61c.96.71 2.21 1.65 3.2 2.39.4-.53.8-1.07 1.2-1.6-.99-.74-2.24-1.68-3.2-2.4-.4.54-.8 1.08-1.2 1.61zM20.4 5.6c-.4-.53-.8-1.07-1.2-1.6-.99.74-2.24 1.68-3.2 2.4.4.53.8 1.07 1.2 1.6.96-.72 2.21-1.65 3.2-2.4zM4 9c-1.1 0-2 .9-2 2v2c0 1.1.9 2 2 2h1l5 3V6L5 9H4zm11.5 3c0-1.33-.58-2.53-1.5-3.35v6.69c.92-.81 1.5-2.01 1.5-3.34z"/></svg>',
-    'Content & PR':'<svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>',
-    'Design & Creative':'<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
-    'Email, CRM & SMS':'<svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>',
-    'Analytics & Data':'<svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>',
-    'Regulatory & Compliance':'<svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>',
-    'Fertility Sector':'<svg viewBox="0 0 24 24"><path d="M17.56 14.24c.28-.69.44-1.45.44-2.24 0-3.31-2.69-6-6-6s-6 2.69-6 6c0 .79.16 1.55.44 2.24C4.39 15.61 3 17.74 3 20v2h18v-2c0-2.26-1.39-4.39-3.44-5.76zM12 8c2.21 0 4 1.79 4 4s-1.79 4-4 4-4-1.79-4-4 1.79-4 4-4zm0 10c-3.37 0-7 1.56-7 3v1h14v-1c0-1.44-3.63-3-7-3z"/></svg>',
-    'article':'<svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>'
-  };
 
-  var CHANNEL_GROUPS = [
-    { label: 'Operations', channels: [
-      { key: 'AI Tools & Platforms', grad: 'var(--grad-sweep)', dot: '#8598E3' },
-      { key: 'SEO & GEO',            grad: 'var(--grad-teal)',  dot: '#1a9e96' },
-      { key: 'Paid Search',          grad: 'var(--grad-gold)',  dot: '#FFBB06' },
-      { key: 'Paid Social',          grad: 'var(--grad-peri)',  dot: '#8598E3' },
-      { key: 'Analytics & Data',     grad: 'var(--grad-mint)',  dot: '#8DCA8B' },
-      { key: 'Regulatory & Compliance', grad: 'linear-gradient(135deg,#571759 0%,#85298C 100%)', dot: '#85298C' }
-    ]},
-    { label: 'Strategy', channels: [
-      { key: 'Fertility Sector',  grad: 'linear-gradient(135deg,#0E635D 0%,#8DCA8B 100%)', dot: '#0E635D' },
-      { key: 'Content & PR',      grad: 'var(--grad-navy)',    dot: '#3d2580' },
-      { key: 'Design & Creative', grad: 'var(--grad-cran)',    dot: '#c04ac8' },
-      { key: 'Email, CRM & SMS',  grad: 'linear-gradient(135deg,#261759 0%,#5566cc 100%)', dot: '#5566cc' }
-    ]}
-  ];
+var USF_LOGO_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1362.34 241.02" style="height:28px;width:auto;max-width:200px;display:block"><defs><style>.ll1{fill:#fff}.ll2{fill:#8598e3}</style></defs><path class="ll1" d="M372.65,20.1h139.97V62.6h-91.48v29.74h82.74v40.24h-82.74v62.49h-48.49V20.1Z"/><path class="ll1" d="M518.87,128.09v-.5c0-39.49,28.24-70.74,68.24-70.74,46.49,0,67.99,34.24,67.99,73.99,0,3,0,6.5-.25,9.75h-90.48c3.75,14.75,14.5,22.25,29.25,22.25,11.5,0,20.25-4.25,29.99-13.75l26.25,21.75c-13,16.5-31.74,27.49-58.49,27.49-42.49,0-72.49-28.49-72.49-70.24Zm91.99-11.75c-1.75-15-10.75-24.5-23.75-24.5s-21,9.5-23.49,24.5h47.24Z"/><path class="ll1" d="M669.59,59.85h47.49v27.25c7.75-18.5,20.25-30.49,42.74-29.5v49.99h-4c-24.75,0-38.74,14.25-38.74,45.24v42.24h-47.49V59.85Z"/><path class="ll1" d="M791.81,153.08v-55.24h-16V59.85h16V25.6h47.24V59.85h31.5v37.99h-31.5v45.99c0,9.5,4.25,13.5,13,13.5,6.25,0,12.25-1.75,18-4.5v37c-8.5,4.75-19.75,8-32.99,8-28.5,0-45.24-12.5-45.24-44.74Z"/><path class="ll1" d="M890.29,12.61h49.24V47.6h-49.24V12.61Zm1,47.24h47.24V195.08h-47.24V59.85Z"/><path class="ll1" d="M964.52,12.61h47.24V195.08h-47.24V12.61Z"/><path class="ll1" d="M1033.76,12.61h49.24V47.6h-49.24V12.61Zm1,47.24h47.24V195.08h-47.24V59.85Z"/><path class="ll1" d="M1116.96,153.64v-54.51h-15.79V61.64h15.79V27.85h46.62V61.64h31.08v37.49h-31.08v45.38c0,9.37,4.19,13.32,12.83,13.32,6.17,0,12.09-1.73,17.76-4.44v36.5c-8.39,4.68-19.48,7.89-32.56,7.89-28.12,0-44.64-12.33-44.64-44.15Z"/><path class="ll1" d="M1306.79,61.64h48.1l-48.84,130.23c-11.6,31.32-24.17,43.41-50.81,43.41-16.53,0-30.34-4.44-42.67-11.59l14.3-32.81c7.65,4.44,15.29,7.15,20.47,7.15,4.69,0,7.89-1.23,11.1-5.43l-52.29-130.97h48.84l26.64,80.41,25.16-80.41Z"/><path class="ll2" d="M125.1,20.11h53.84V117.21c0,52.78-29.33,81.85-82.58,81.85S15,170.42,15,118.42V20.11h53.84V117.45c0,21.49,9.69,32.85,28.01,32.85s28.25-10.94,28.25-31.64V20.11Zm156.1,63.96c-23.26-5.22-27.02-8.21-27.02-13.33v-.48c0-4.81,5.14-7.68,13.73-7.68,14.94,0,31.12,5.72,45.56,16.09l2.62,1.88,27.08-38.25-2.35-1.89c-19.46-15.62-42.91-23.21-71.7-23.21-41.14,0-68.78,23.07-68.78,57.41v.49c0,37.84,31.4,48.14,66.34,56.11,24.45,5.86,26.34,9.22,26.34,13.34v.48c0,7.32-10.27,8.41-16.39,8.41-18.55,0-36.36-6.61-52.95-19.64l-2.44-1.92-30.13,35.99,2.33,2.07c21.04,18.62,49.98,28.88,81.49,28.88,43.55,0,71.69-22.91,71.69-58.38v-.48c0-21.59-7.93-43.3-65.42-55.88Z"/></svg>';
 
-  var ALL_CHANNELS = [];
-  CHANNEL_GROUPS.forEach(function(g) { g.channels.forEach(function(c) { ALL_CHANNELS.push(c); }); });
+var ICONS = {
+  'Fertility Sector':          '<svg viewBox="0 0 24 24"><path d="M17.56 14.24c.28-.69.44-1.45.44-2.24 0-3.31-2.69-6-6-6s-6 2.69-6 6c0 .79.16 1.55.44 2.24C4.39 15.61 3 17.74 3 20v2h18v-2c0-2.26-1.39-4.39-3.44-5.76zM12 8c2.21 0 4 1.79 4 4s-1.79 4-4 4-4-1.79-4-4 1.79-4 4-4zm0 10c-3.37 0-7 1.56-7 3v1h14v-1c0-1.44-3.63-3-7-3z"/></svg>',
+  'AI Tools & Platforms':      '<svg viewBox="0 0 24 24"><path d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1-2.73 2.71-2.73 7.08 0 9.79s7.15 2.71 9.88 0C18.32 15.65 19 14.08 19 12.1h2c0 1.98-.88 4.55-2.64 6.29-3.51 3.48-9.21 3.48-12.72 0-3.5-3.47-3.53-9.11-.02-12.58s9.14-3.49 12.65 0L21 3v7.12zM12.5 8v4.25l3.5 2.08-.72 1.21L11 13V8h1.5z"/></svg>',
+  'GEO & Search':              '<svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>',
+  'Paid Search':               '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95.49-7.4-2.43-7.93-6.37C4.53 9.61 7.96 6.12 12 6.07V2l5 5-5 5V8.07c-2.76.44-4.77 2.99-4.33 5.75.37 2.27 2.06 3.96 4.33 4.33v1.78zm6.07-4.56c-.18.67-.46 1.31-.84 1.88l-1.46-1.46c.22-.36.39-.75.51-1.17l1.79.75z"/></svg>',
+  'Paid Social':               '<svg viewBox="0 0 24 24"><path d="M18 11v2h4v-2h-4zm-2 6.61c.96.71 2.21 1.65 3.2 2.39.4-.53.8-1.07 1.2-1.6-.99-.74-2.24-1.68-3.2-2.4-.4.54-.8 1.08-1.2 1.61zM20.4 5.6c-.4-.53-.8-1.07-1.2-1.6-.99.74-2.24 1.68-3.2 2.4.4.53.8 1.07 1.2 1.6.96-.72 2.21-1.65 3.2-2.4zM4 9c-1.1 0-2 .9-2 2v2c0 1.1.9 2 2 2h1l5 3V6L5 9H4zm11.5 3c0-1.33-.58-2.53-1.5-3.35v6.69c.92-.81 1.5-2.01 1.5-3.34z"/></svg>',
+  'Content & PR':              '<svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>',
+  'Design & Creative':         '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
+  'Email & CRM':               '<svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>',
+  'Regulatory & Compliance':   '<svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>',
+  'Board-Level Signals':       '<svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>',
+  'Marketing Powerhouse':      '<svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>',
+  'Patient Advocate':          '<svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>',
+  'Physician & Clinical':      '<svg viewBox="0 0 24 24"><path d="M19 8h-1V3H6v5H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zM8 5h8v3H8V5zm8 12v2H8v-4h8v2zm2-2v-2H6v2H4v-4c0-.55.45-1 1-1h14c.55 0 1 .45 1 1v4h-2z"/></svg>',
+  'Science & Innovation':      '<svg viewBox="0 0 24 24"><path d="M19.8 18.4L14 10.67V6h1c.55 0 1-.45 1-1s-.45-1-1-1H9c-.55 0-1 .45-1 1s.45 1 1 1h1v4.67L4.2 18.4C3.71 19.06 4 20 4.8 20h14.4c.8 0 1.09-.94.6-1.6z"/></svg>',
+  'Big AI Insider':            '<svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6A4.997 4.997 0 0 1 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z"/></svg>',
+  'AI Skeptic & Regulation':   '<svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>',
+  'article':                   '<svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>'
+};
 
-  var dataByChannel = {}, activeChannel = null, briefingDate = null;
+var TOPICS = [
+  { key: 'Fertility Sector',        grad: 'linear-gradient(135deg,#0E635D 0%,#8DCA8B 100%)', dot: '#4ab87a' },
+  { key: 'AI Tools & Platforms',    grad: 'var(--grad-sweep)',                                dot: '#8598E3' },
+  { key: 'GEO & Search',            grad: 'var(--grad-teal)',                                 dot: '#1a9e96' },
+  { key: 'Paid Search',             grad: 'var(--grad-gold)',                                 dot: '#FFBB06' },
+  { key: 'Paid Social',             grad: 'var(--grad-peri)',                                 dot: '#8598E3' },
+  { key: 'Content & PR',            grad: 'var(--grad-navy)',                                 dot: '#5566cc' },
+  { key: 'Design & Creative',       grad: 'var(--grad-cran)',                                 dot: '#c04ac8' },
+  { key: 'Email & CRM',             grad: 'linear-gradient(135deg,#261759 0%,#5566cc 100%)', dot: '#7788dd' },
+  { key: 'Regulatory & Compliance', grad: 'linear-gradient(135deg,#571759 0%,#85298C 100%)', dot: '#85298C' }
+];
 
-  function norm(r) { return (r && r.fields && typeof r.fields === 'object') ? r.fields : r; }
-  function fmtDate(d) { var dt = d ? new Date(d + 'T12:00:00') : new Date(); return dt.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }); }
-  function extractSource(url) {
-    if (!url) return '';
-    try {
-      var h = new URL(url).hostname.replace(/^www\./, '');
-      var m = {'searchengineland.com':'Search Engine Land','searchenginejournal.com':'SEJ','martech.org':'Martech','socialmediatoday.com':'Social Media Today','adage.com':'Ad Age','moz.com':'Moz','hubspot.com':'HubSpot','blog.hubspot.com':'HubSpot Blog','contentmarketinginstitute.com':'CMI','healthcareitnews.com':'Healthcare IT News','modernhealthcare.com':'Modern Healthcare','fiercehealthcare.com':'Fierce Healthcare','nytimes.com':'NYT','theverge.com':'The Verge','wired.com':'Wired','techcrunch.com':'TechCrunch','reuters.com':'Reuters','openai.com':'OpenAI','emarketer.com':'EMARKETER','fertilityandsterility.org':'Fertility & Sterility','apnews.com':'AP News','statnews.com':'STAT News','cnbc.com':'CNBC'};
-      return m[h] || h.split('.')[0].charAt(0).toUpperCase() + h.split('.')[0].slice(1);
-    } catch(e) { return ''; }
+var PERSPECTIVES = [
+  { key: 'Board-Level Signals',     grad: 'var(--grad-navy)',                                 dot: '#5566cc' },
+  { key: 'Marketing Powerhouse',    grad: 'var(--grad-sweep)',                                dot: '#8598E3' },
+  { key: 'Patient Advocate',        grad: 'linear-gradient(135deg,#0E635D 0%,#8DCA8B 100%)', dot: '#4ab87a' },
+  { key: 'Physician & Clinical',    grad: 'var(--grad-teal)',                                 dot: '#1a9e96' },
+  { key: 'Science & Innovation',    grad: 'linear-gradient(135deg,#b88a00 0%,#FFBB06 100%)', dot: '#FFBB06' },
+  { key: 'Big AI Insider',          grad: 'var(--grad-peri)',                                 dot: '#8598E3' },
+  { key: 'AI Skeptic & Regulation', grad: 'var(--grad-cran)',                                 dot: '#c04ac8' }
+];
+
+var ALL_TOPICS_KEYS    = TOPICS.map(function(c){return c.key;});
+var ALL_PERSP_KEYS     = PERSPECTIVES.map(function(c){return c.key;});
+
+var activeTab     = 'topics';
+var activeChannel = TOPICS[0].key;
+var dataByChannel = {};
+var briefingDate  = null;
+
+function norm(r){ return (r && r.fields && typeof r.fields === 'object') ? r.fields : r; }
+function fmtDate(d){
+  var dt = d ? new Date(d+'T12:00:00') : new Date();
+  return dt.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+}
+function extractSource(url){
+  if(!url) return '';
+  try{
+    var h=new URL(url).hostname.replace(/^www\./,'');
+    var m={'searchengineland.com':'Search Engine Land','searchenginejournal.com':'SEJ','martech.org':'Martech','socialmediatoday.com':'Social Media Today','adage.com':'Ad Age','moz.com':'Moz','hubspot.com':'HubSpot','blog.hubspot.com':'HubSpot Blog','contentmarketinginstitute.com':'CMI','healthcareitnews.com':'Healthcare IT News','modernhealthcare.com':'Modern Healthcare','fiercehealthcare.com':'Fierce Healthcare','nytimes.com':'NYT','theverge.com':'The Verge','wired.com':'Wired','techcrunch.com':'TechCrunch','reuters.com':'Reuters','openai.com':'OpenAI','emarketer.com':'EMARKETER','fertilityandsterility.org':'Fertility & Sterility','apnews.com':'AP News','statnews.com':'STAT News','cnbc.com':'CNBC','wsj.com':'WSJ','bloomberg.com':'Bloomberg','axios.com':'Axios'};
+    return m[h]||h.split('.')[0].charAt(0).toUpperCase()+h.split('.')[0].slice(1);
+  }catch(e){return '';}
+}
+function getArticleMeta(data,which){
+  var src='',dt='';
+  if(which===1){src=data['Article Source']||extractSource(data['Article URL']);dt=data['Article Date']||'';}
+  else{src=data['Article Source 2']||extractSource(data['Article URL 2']);dt=data['Article Date 2']||'';}
+  var parts=[]; if(src)parts.push(src); if(dt)parts.push(dt); return parts.join(' · ');
+}
+function filterLatest(records){
+  var all=records.map(norm); if(all.length===0) return [];
+  var dates=[];
+  for(var i=0;i<all.length;i++){if(all[i].Date&&dates.indexOf(all[i].Date)===-1)dates.push(all[i].Date);}
+  dates.sort().reverse(); var latest=dates[0]; var out=[];
+  for(var j=0;j<records.length;j++){if(norm(records[j]).Date===latest)out.push(records[j]);}
+  return out;
+}
+function fetchData(){
+  return fetch('/api/get-intelligence').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(function(j){
+    var raw=Array.isArray(j)?j:(j.records||j.data||[]); return filterLatest(raw);
+  });
+}
+
+function channelObj(key){
+  for(var i=0;i<TOPICS.length;i++){if(TOPICS[i].key===key)return TOPICS[i];}
+  for(var j=0;j<PERSPECTIVES.length;j++){if(PERSPECTIVES[j].key===key)return PERSPECTIVES[j];}
+  return null;
+}
+
+function renderApp(records){
+  var app=document.getElementById('app');
+  var all=records.map(norm);
+  briefingDate=all.length>0?all[0].Date:null;
+  dataByChannel={};
+  ALL_TOPICS_KEYS.forEach(function(k){dataByChannel[k]=null;});
+  ALL_PERSP_KEYS.forEach(function(k){dataByChannel[k]=null;});
+  all.forEach(function(f){if(f.Channel&&f.Channel in dataByChannel&&dataByChannel[f.Channel]===null)dataByChannel[f.Channel]=f;});
+  activeChannel=TOPICS[0].key;
+
+  var hero=null;
+  for(var i=0;i<all.length;i++){if(all[i].Channel==='Hero'){hero=all[i];break;}}
+  var heroHL=(hero&&hero.ToDo1)?hero.ToDo1:'Latest updates across your marketing channels.';
+  var heroBody=(hero&&hero.Insight)?hero.Insight:'';
+  var heroA1=hero?(hero['Article Title']||''):'';
+  var heroU1=hero?(hero['Article URL']||''):'';
+  var heroA2=hero?(hero['Article Title 2']||''):'';
+  var heroU2=hero?(hero['Article URL 2']||''):'';
+  var artIcon=ICONS['article'];
+
+  var h='';
+
+  /* HERO CARD */
+  h+='<div class="hero-card"><div class="hero-noise"></div>';
+  h+='<div class="hero-top-row">';
+  h+='<div class="hero-logo-eyebrow">'+USF_LOGO_SVG+'<div class="hero-title-line">AI Marketing Intelligence</div></div>';
+  h+='<div class="hero-date-block">';
+  h+='<div class="hero-date-pill"><span class="pulse-dot"></span><span class="hero-date-text">'+fmtDate(briefingDate)+'</span></div>';
+  h+='<div class="hero-refresh-line">Refreshed daily at 6:00 AM ET</div>';
+  h+='</div></div>';
+  h+='<div class="hero-divider"></div>';
+
+  h+='<div class="trending-panel">';
+  h+='<div class="trending-label">Trending News</div>';
+  h+='<div class="hero-headline">'+heroHL+'</div>';
+  if(heroBody) h+='<div class="hero-overview">'+heroBody+'</div>';
+  if((heroA1&&heroU1)||(heroA2&&heroU2)){
+    h+='<div class="hero-articles">';
+    if(heroA1&&heroU1){var hm1=hero?getArticleMeta(hero,1):''; h+='<a class="hero-article" href="'+heroU1+'" target="_blank" rel="noopener"><div class="ha-title"><span class="ha-icon">'+artIcon+'</span><span>'+heroA1+'</span><span class="ha-arrow">↗</span></div>'+(hm1?'<div class="ha-meta">'+hm1+'</div>':'')+'</a>';}
+    if(heroA2&&heroU2){var hm2=hero?getArticleMeta(hero,2):''; h+='<a class="hero-article" href="'+heroU2+'" target="_blank" rel="noopener"><div class="ha-title"><span class="ha-icon">'+artIcon+'</span><span>'+heroA2+'</span><span class="ha-arrow">↗</span></div>'+(hm2?'<div class="ha-meta">'+hm2+'</div>':'')+'</a>';}
+    h+='</div>';
   }
-  function getArticleMeta(data, which) {
-    var src = '', dt = '';
-    if (which === 1) { src = data['Article Source'] || extractSource(data['Article URL']); dt = data['Article Date'] || ''; }
-    else { src = data['Article Source 2'] || extractSource(data['Article URL 2']); dt = data['Article Date 2'] || ''; }
-    var parts = []; if (src) parts.push(src); if (dt) parts.push(dt); return parts.join(' · ');
-  }
-  function filterLatest(records) {
-    var all = records.map(norm); if (all.length === 0) return [];
-    var dates = []; for (var i = 0; i < all.length; i++) { if (all[i].Date && dates.indexOf(all[i].Date) === -1) dates.push(all[i].Date); }
-    dates.sort().reverse(); var latest = dates[0]; var out = [];
-    for (var j = 0; j < records.length; j++) { if (norm(records[j]).Date === latest) out.push(records[j]); }
-    return out;
-  }
-  function fetchData() {
-    return fetch('/api/get-intelligence').then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(function(j) {
-      var raw = Array.isArray(j) ? j : (j.records || j.data || []); return filterLatest(raw);
+  h+='</div></div>';
+
+  /* MAIN LAYOUT */
+  h+='<div class="main-layout">';
+  h+='<div class="sidebar">';
+
+  /* tab switcher */
+  h+='<div class="sidebar-tabs">';
+  h+='<button class="sidebar-tab active" data-tab="topics">Topics</button>';
+  h+='<button class="sidebar-tab" data-tab="perspectives">Perspectives</button>';
+  h+='</div>';
+
+  h+='<div class="channel-list" id="channelList">';
+  h+=renderSidebarItems(TOPICS,'topics');
+  h+='</div>';
+
+  h+='</div>';
+  h+='<div class="content-area" id="contentCard"></div>';
+  h+='</div>';
+  h+='<div class="footer">AI-generated. Treat all claims as unverified until confirmed by a human source.<br>Refreshed daily at 6:00 AM ET · USF AI Marketing Hub</div>';
+
+  app.innerHTML=h;
+
+  document.querySelectorAll('.sidebar-tab').forEach(function(tab){
+    tab.addEventListener('click',function(){
+      var t=this.dataset.tab;
+      if(t===activeTab) return;
+      activeTab=t;
+      document.querySelectorAll('.sidebar-tab').forEach(function(b){b.classList.remove('active');});
+      this.classList.add('active');
+      var list=TOPICS;
+      if(t==='perspectives') list=PERSPECTIVES;
+      activeChannel=list[0].key;
+      document.getElementById('channelList').innerHTML=renderSidebarItems(list,t);
+      attachChBtnListeners();
+      renderCard();
     });
-  }
+  });
 
-  function renderApp(records) {
-    var app = document.getElementById('app');
-    var all = records.map(norm);
-    briefingDate = all.length > 0 ? all[0].Date : null;
-    dataByChannel = {};
-    ALL_CHANNELS.forEach(function(c) { dataByChannel[c.key] = null; });
-    all.forEach(function(f) { if (f.Channel && f.Channel in dataByChannel && dataByChannel[f.Channel] === null) dataByChannel[f.Channel] = f; });
-    activeChannel = ALL_CHANNELS[0].key;
+  attachChBtnListeners();
+  renderCard();
+  notifyHeight();
+}
 
-    var hero = null;
-    for (var i = 0; i < all.length; i++) { if (all[i].Channel === 'Hero') { hero = all[i]; break; } }
-    var heroHL = (hero && hero.ToDo1) ? hero.ToDo1 : 'Latest updates across your marketing channels.';
-    var heroBody = (hero && hero.Insight) ? hero.Insight : '';
-    var heroA1 = hero ? (hero['Article Title'] || '') : '';
-    var heroU1 = hero ? (hero['Article URL'] || '') : '';
-    var heroA2 = hero ? (hero['Article Title 2'] || '') : '';
-    var heroU2 = hero ? (hero['Article URL 2'] || '') : '';
-    var artIcon = ICONS['article'];
+function renderSidebarItems(list,tabType){
+  var h='';
+  list.forEach(function(c){
+    h+='<button class="ch-btn'+(c.key===activeChannel?' active':'')+'" data-key="'+c.key+'">';
+    h+='<span class="btn-dot" style="background:'+c.dot+'"></span>';
+    h+='<span class="btn-icon">'+ICONS[c.key]+'</span>';
+    h+='<span class="ch-btn-label">'+c.key+'</span>';
+    h+='</button>';
+  });
+  return h;
+}
 
-    var h = '';
-
-    /* HERO CARD */
-    h += '<div class="hero-card">';
-    h += '<div class="hero-card-top">';
-    h += '<div><div class="hero-eyebrow">USF AI Marketing Hub</div><div class="hero-title"><span class="gx">AI Marketing Intelligence</span></div></div>';
-    h += '<div class="hero-meta-strip"><div class="hero-date">' + fmtDate(briefingDate) + '</div><div class="hero-refresh">Refreshed daily at 6:00 AM ET</div></div>';
-    h += '</div>';
-    h += '<div class="hero-divider"></div>';
-    h += '<div class="biggest-news-label">Biggest News</div>';
-    h += '<div class="hero-headline">' + heroHL + '</div>';
-    if (heroBody) h += '<div class="hero-overview">' + heroBody + '</div>';
-    if ((heroA1 && heroU1) || (heroA2 && heroU2)) {
-      h += '<div class="hero-articles">';
-      if (heroA1 && heroU1) { var hm1 = hero ? getArticleMeta(hero, 1) : ''; h += '<a class="hero-article" href="' + heroU1 + '" target="_blank" rel="noopener"><span class="ha-title"><span class="ha-icon">' + artIcon + '</span><span>' + heroA1 + '</span><span class="arrow">↗</span></span>' + (hm1 ? '<span class="ha-meta">' + hm1 + '</span>' : '') + '</a>'; }
-      if (heroA2 && heroU2) { var hm2 = hero ? getArticleMeta(hero, 2) : ''; h += '<a class="hero-article" href="' + heroU2 + '" target="_blank" rel="noopener"><span class="ha-title"><span class="ha-icon">' + artIcon + '</span><span>' + heroA2 + '</span><span class="arrow">↗</span></span>' + (hm2 ? '<span class="ha-meta">' + hm2 + '</span>' : '') + '</a>'; }
-      h += '</div>';
-    }
-    h += '</div>';
-
-    /* MAIN LAYOUT */
-    h += '<div class="main-layout"><div class="sidebar">';
-    CHANNEL_GROUPS.forEach(function(group) {
-      h += '<div class="sidebar-section"><div class="sidebar-section-label">' + group.label + '</div>';
-      group.channels.forEach(function(c) {
-        h += '<button class="ch-btn' + (c.key === activeChannel ? ' active' : '') + '" data-key="' + c.key + '">';
-        h += '<span class="btn-dot" style="background:' + c.dot + '"></span>';
-        h += '<span class="btn-icon">' + ICONS[c.key] + '</span>';
-        h += '<span class="ch-btn-label">' + c.key + '</span>';
-        h += '</button>';
-      });
-      h += '</div>';
+function attachChBtnListeners(){
+  document.querySelectorAll('.ch-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var k=this.dataset.key;
+      if(k===activeChannel) return;
+      activeChannel=k;
+      document.querySelectorAll('.ch-btn').forEach(function(b){b.classList.remove('active');});
+      this.classList.add('active');
+      renderCard();
     });
-    h += '</div><div class="content-area" id="contentCard"></div></div>';
-    h += '<div class="footer">AI-generated. Treat all claims as unverified until confirmed by a human source.<br>Refreshed daily at 6:00 AM ET · USF AI Marketing Hub</div>';
+  });
+}
 
-    app.innerHTML = h;
-    document.querySelectorAll('.ch-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var k = this.dataset.key; if (k === activeChannel) return;
-        activeChannel = k;
-        document.querySelectorAll('.ch-btn').forEach(function(b) { b.classList.remove('active'); });
-        this.classList.add('active'); renderCard();
-      });
-    });
-    renderCard(); notifyHeight();
+function renderCard(){
+  var container=document.getElementById('contentCard');
+  var ch=channelObj(activeChannel);
+  if(!ch) return;
+  var isPerspective=ALL_PERSP_KEYS.indexOf(ch.key)>-1;
+  var data=dataByChannel[ch.key];
+  var icon=ICONS[ch.key];
+  var artIcon=ICONS['article'];
+  var typeLabel=isPerspective?'Perspective':'Topic';
+
+  if(!data){
+    /* Perspectives show a "coming soon" panel; Topics show empty */
+    var inner='<div class="card-ch-header"><div class="card-ch-icon" style="background:'+ch.grad+'">'+icon+'</div>';
+    inner+='<div class="card-ch-meta"><div class="card-ch-name">'+ch.key+'</div><div class="card-ch-type">'+typeLabel+'</div></div></div>';
+    if(isPerspective){
+      inner+='<div class="perspective-soon"><div class="perspective-soon-icon">🔭</div><div class="perspective-soon-title">Coming in Phase 2</div><div class="perspective-soon-body">The '+ch.key+' perspective is being built out. Each perspective uses a dedicated Claude system prompt to synthesize the day\'s news through a specific strategic lens — distinct from the topic-based feed. Check back soon.</div></div>';
+    } else {
+      inner+='<div class="empty-state">No update for this channel today.</div>';
+    }
+    container.innerHTML='<div class="content-card"><div class="card-body">'+inner+'</div></div>';
+    notifyHeight(); return;
   }
 
-  function renderCard() {
-    var container = document.getElementById('contentCard');
-    var ch = null;
-    for (var i = 0; i < ALL_CHANNELS.length; i++) { if (ALL_CHANNELS[i].key === activeChannel) { ch = ALL_CHANNELS[i]; break; } }
-    if (!ch) return;
-    var data = dataByChannel[ch.key], icon = ICONS[ch.key], artIcon = ICONS['article'];
+  var insight=data.Insight||'', todo1=data.ToDo1||'', todo2=data.ToDo2||'';
+  var art1=data['Article Title']||'', url1=data['Article URL']||'';
+  var art2=data['Article Title 2']||'', url2=data['Article URL 2']||'';
+  var stack=data.Stack||'';
 
-    if (!data) {
-      container.innerHTML = '<div class="content-card"><div class="card-body"><div class="card-ch-header"><div class="card-ch-icon" style="background:' + ch.grad + '">' + icon + '</div><div><div class="card-ch-name">' + ch.key + '</div></div></div><div class="empty-state">No update for this channel today.</div></div></div>';
-      notifyHeight(); return;
-    }
+  var inner='<div class="card-ch-header"><div class="card-ch-icon" style="background:'+ch.grad+'">'+icon+'</div>';
+  inner+='<div class="card-ch-meta"><div class="card-ch-name">'+ch.key+'</div>';
+  inner+='<div class="card-ch-type">'+typeLabel+(briefingDate?' · '+fmtDate(briefingDate):'')+'</div>';
+  inner+='</div></div>';
 
-    var insight = data.Insight || '', todo1 = data.ToDo1 || '', todo2 = data.ToDo2 || '';
-    var art1 = data['Article Title'] || '', url1 = data['Article URL'] || '';
-    var art2 = data['Article Title 2'] || '', url2 = data['Article URL 2'] || '';
-    var stack = data.Stack || '';
-
-    var inner = '<div class="card-ch-header"><div class="card-ch-icon" style="background:' + ch.grad + '">' + icon + '</div>';
-    inner += '<div><div class="card-ch-name">' + ch.key + '</div>' + (briefingDate ? '<div class="card-ch-date">' + fmtDate(briefingDate) + '</div>' : '') + '</div></div>';
-
-    if (insight) inner += '<div class="sect-label">Insight</div><div class="insight-text">' + insight + '</div>';
-
-    if (todo1 || todo2) {
-      inner += '<div class="sect-label">Recommendations</div><div class="rec-list">';
-      if (todo1) inner += '<div class="rec-item"><span class="rec-dot" style="background:' + ch.dot + '"></span><span>' + todo1 + '</span></div>';
-      if (todo2) inner += '<div class="rec-item"><span class="rec-dot" style="background:' + ch.dot + '"></span><span>' + todo2 + '</span></div>';
-      inner += '</div>';
-    }
-
-    if ((art1 && url1) || (art2 && url2)) {
-      inner += '<div class="sect-label">Reading</div><div class="article-list">';
-      if (art1 && url1) { var m1 = getArticleMeta(data, 1); inner += '<a class="article-link" href="' + url1 + '" target="_blank" rel="noopener"><div class="article-title-row"><span class="link-icon">' + artIcon + '</span><span>' + art1 + '</span><span class="arrow">↗</span></div>' + (m1 ? '<div class="article-meta">' + m1 + '</div>' : '') + '</a>'; }
-      if (art2 && url2) { var m2 = getArticleMeta(data, 2); inner += '<a class="article-link" href="' + url2 + '" target="_blank" rel="noopener"><div class="article-title-row"><span class="link-icon">' + artIcon + '</span><span>' + art2 + '</span><span class="arrow">↗</span></div>' + (m2 ? '<div class="article-meta">' + m2 + '</div>' : '') + '</a>'; }
-      inner += '</div>';
-    }
-
-    if (stack) {
-      inner += '<div class="sect-label">Current Stack</div><div class="stack-pills">';
-      stack.split(',').forEach(function(s) { var t = s.trim(); if (t) inner += '<span class="stack-pill">' + t + '</span>'; });
-      inner += '</div>';
-    }
-
-    container.innerHTML = '<div class="content-card"><div class="card-body">' + inner + '</div></div>';
-    notifyHeight();
+  if(insight) inner+='<div class="sect-label">Insight</div><div class="insight-text">'+insight+'</div>';
+  if(todo1||todo2){
+    inner+='<div class="sect-label">Recommendations</div><div class="rec-list">';
+    if(todo1) inner+='<div class="rec-item"><span class="rec-dot" style="background:'+ch.dot+'"></span><span>'+todo1+'</span></div>';
+    if(todo2) inner+='<div class="rec-item"><span class="rec-dot" style="background:'+ch.dot+'"></span><span>'+todo2+'</span></div>';
+    inner+='</div>';
+  }
+  if((art1&&url1)||(art2&&url2)){
+    inner+='<div class="sect-label">Reading</div><div class="article-list">';
+    if(art1&&url1){var m1=getArticleMeta(data,1); inner+='<a class="article-link" href="'+url1+'" target="_blank" rel="noopener"><div class="article-title-row"><span class="link-icon">'+artIcon+'</span><span>'+art1+'</span><span class="arrow">↗</span></div>'+(m1?'<div class="article-meta">'+m1+'</div>':'')+'</a>';}
+    if(art2&&url2){var m2=getArticleMeta(data,2); inner+='<a class="article-link" href="'+url2+'" target="_blank" rel="noopener"><div class="article-title-row"><span class="link-icon">'+artIcon+'</span><span>'+art2+'</span><span class="arrow">↗</span></div>'+(m2?'<div class="article-meta">'+m2+'</div>':'')+'</a>';}
+    inner+='</div>';
+  }
+  if(stack){
+    inner+='<div class="sect-label">Current Stack</div><div class="stack-pills">';
+    stack.split(',').forEach(function(s){var t=s.trim();if(t)inner+='<span class="stack-pill">'+t+'</span>';});
+    inner+='</div>';
   }
 
-  function notifyHeight() { try { window.parent.postMessage({ type: 'resize-iframe', height: document.documentElement.scrollHeight }, '*'); } catch(e) {} }
-  function renderError(msg) { document.getElementById('app').innerHTML = '<div class="hero-card"><div class="hero-card-top"><div><div class="hero-eyebrow">USF AI Marketing Hub</div><div class="hero-title"><span class="gx">AI Marketing Intelligence</span></div></div></div></div><div class="error-container"><div class="error-icon">⚠</div><div class="error-msg">' + msg + '</div><button class="retry-btn" onclick="location.reload()">Retry</button></div>'; }
+  container.innerHTML='<div class="content-card"><div class="card-body">'+inner+'</div></div>';
+  notifyHeight();
+}
 
-  fetchData().then(function(r) { renderApp(r); }).catch(function(e) { console.error(e); renderError('Could not load the briefing. Confirm the n8n automation has run and the API endpoint is reachable.'); });
+function notifyHeight(){try{window.parent.postMessage({type:'resize-iframe',height:document.documentElement.scrollHeight},'*');}catch(e){}}
+function renderError(msg){document.getElementById('app').innerHTML='<div class="hero-card"><div class="hero-noise"></div><div class="hero-top-row">'+USF_LOGO_SVG+'</div></div><div class="error-container"><div class="error-icon">⚠</div><div class="error-msg">'+msg+'</div><button class="retry-btn" onclick="location.reload()">Retry</button></div>';}
+
+fetchData().then(function(r){renderApp(r);}).catch(function(e){console.error(e);renderError('Could not load the briefing. Confirm the n8n automation has run and the API endpoint is reachable.');});
 })();
 </script>
 </body>
